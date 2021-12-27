@@ -1,0 +1,135 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.5.0'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group 'io.github.rothschil'
+version '1.0.0'
+
+def SpringBootVersion="2.5.0"
+def lombokVersion="1.18.22"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+jar {
+    // 禁用档案后缀，处理 **-plain.jar
+    archiveClassifier = ''
+}
+
+// 默认不需要打可执行jar包
+bootJar {
+    enabled = true
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding('UTF-8')
+}
+
+dependencies {
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    testImplementation("org.projectlombok:lombok:$lombokVersion")
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    implementation("org.projectlombok:lombok:$lombokVersion")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:$SpringBootVersion") {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter'
+//            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//            exclude group: 'org.junit.jupiter', module: 'junit-jupiter-api'
+//            exclude group: 'net.minidev', module: 'json-smart'
+//            exclude group: 'net.bytebuddy', module: 'byte-buddy'
+//            exclude group: 'net.bytebuddy', module: 'byte-buddy-agent'
+    }
+
+    implementation('io.github.rothschil:persistence-mybatis:1.2.2.RELEASE'){
+        exclude group:'com.oracle', module: 'ojdbc6'
+    }
+    implementation('io.github.rothschil:framework-limit:1.2.2.RELEASE')
+    implementation('io.github.rothschil:persistence-redis:1.2.2.RELEASE')
+
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    implementation('com.github.penggle:kaptcha:2.3.2'){
+        exclude group:'javax.servlet', module: 'javax.servlet-api'
+    }
+
+    implementation('org.apache.shiro:shiro-spring:1.8.0'){
+        exclude group:'org.slf4j', module: 'slf4j-api'
+    }
+    implementation('org.apache.shiro:shiro-ehcache:1.8.0')
+
+    implementation('com.github.theborakompanioni:thymeleaf-extras-shiro:2.1.0')
+
+//    implementation('org.springframework.boot:spring-boot-starter-data-redis'){
+//        exclude group:'org.slf4j', module: 'slf4j-api'
+//    }
+//    implementation('redis.clients:jedis:3.7.0'){
+//        exclude group:'org.apache.commons', module: 'commons-pool2'
+//    }
+
+
+    implementation('org.apache.poi:poi-ooxml:5.0.0'){
+        exclude group:'commons-io', module: 'commons-io'
+        exclude group:'xml-apis', module: 'xml-apis'
+    }
+    implementation('com.github.oshi:oshi-core:5.8.2'){
+        exclude group:'org.slf4j', module: 'slf4j-api'
+    }
+    implementation('org.springframework.boot:spring-boot-devtools')
+    implementation(fileTree(dir: 'libs', includes: ['*.jar']))
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
+// 删除所有输出目录
+task cleanBuildDir(type: Delete) {
+    delete "${projectDir}/build"
+    delete "${projectDir}/out"
+}
+
+task javaDoc(type: Javadoc) {
+    //  delete("javadoc/")
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"
+    //保留 public 的方法
+    options.memberLevel = JavadocMemberLevel.PRIVATE
+    options.linkSource = true
+    options.links("http://docs.oracle.com/javase/8/docs/api/")
+    //是否保留作者
+    options.author = true
+    options.version = true
+    options.header = project.name
+    //是否生成树状结构
+    options.noTree = true
+    options.noIndex = true
+    options.noNavBar = true
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+    //定义所有Java源代码
+    source = sourceSets.main.allJava
+    // destinationDir = file("javadoc/") //生成 javadoc 的目标目录
+    //报错不中断
+    failOnError = false
+}
+
+task javaDocJar(type: Jar, dependsOn: javaDoc) {
+    // 文件标记
+    archiveClassifier = "javadoc"
+    // 通过javaDocTask 找到目标路径
+    from javaDoc.destinationDir
+}
+
+//自定义打包任务，继承Jar，并且依赖classes，最终编译才打包 dependsOn: [classes]
+task sourceTask(type: Jar, dependsOn: [classes]) {
+    //所有源码读取类型
+    from sourceSets.main.allSource
+    //定义文件后缀类型
+    classifier('sources')
+}
