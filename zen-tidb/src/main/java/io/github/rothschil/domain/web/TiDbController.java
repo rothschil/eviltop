@@ -1,6 +1,6 @@
 package io.github.rothschil.domain.web;
 
-import io.github.rothschil.queue.NgxLogQueue;
+import io.github.rothschil.base.aop.queue.AbstractQueue;
 import io.github.rothschil.task.FileTaskComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.Future;
 
 /**
  * 通用请求处理
@@ -30,12 +32,22 @@ public class TiDbController {
 
     @GetMapping("/get")
     public int getQueueSize() {
-        return ngxLogQueue.getQueueSize();
+        return abstractQueue.getQueueSize();
+    }
+
+    @GetMapping("/status")
+    public boolean running() {
+        return abstractQueue.isRunning();
+    }
+
+    @GetMapping("/fut")
+    public Future<?> threadStatus() {
+        return abstractQueue.threadStatus();
     }
 
     private FileTaskComponent fileTaskComponent;
 
-    private NgxLogQueue ngxLogQueue;
+    private AbstractQueue abstractQueue;
 
     @Autowired
     public void setFileTaskComponent(FileTaskComponent fileTaskComponent) {
@@ -43,8 +55,9 @@ public class TiDbController {
     }
 
     @Autowired
-    public void setNgxLogQueue(NgxLogQueue ngxLogQueue) {
-        this.ngxLogQueue = ngxLogQueue;
+    public void setAbstractQueue(AbstractQueue abstractQueue) {
+        this.abstractQueue = abstractQueue;
     }
+
 }
 

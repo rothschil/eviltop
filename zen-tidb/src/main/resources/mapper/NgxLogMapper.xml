@@ -25,7 +25,7 @@
     <result column="nginxVersion" jdbcType="VARCHAR" property="nginxVersion" />
   </resultMap>
 
-  <insert id="insertBatchByOn2" parameterType="java.util.List">
+<!--  <insert id="insertBatchByOn2" parameterType="java.util.List">
     insert into tb_ngx_log (log_time, uri, host, request, requestUri, requestBody, requestMethod, requestTime, upstreamResponseTime, isArgs, args, status, uid, httpHost, referer, ua, upstreamAddr, proxyaddxforwardedFor, httpXForwardedFor, nginxVersion) values
     <foreach collection="list" item="item" index="index" separator=",">
       (#{item.time,jdbcType=VARCHAR}, #{item.uri,jdbcType=VARCHAR}, #{item.host,jdbcType=VARCHAR},
@@ -36,7 +36,7 @@
       #{item.ua,jdbcType=VARCHAR}, #{item.upstreamAddr,jdbcType=VARCHAR}, #{item.proxyaddxforwardedFor,jdbcType=VARCHAR},
       #{item.httpXForwardedFor,jdbcType=VARCHAR},#{item.nginxVersion,jdbcType=VARCHAR})
     </foreach>
-  </insert>
+  </insert>-->
 
   <insert id="insertBatchByOn" parameterType="java.util.List">
     insert into tb_ngx_log (log_time, uri, host, requestMethod, requestTime, upstreamResponseTime,  status, uid, httpHost,ua, upstreamAddr, proxyaddxforwardedFor, httpXForwardedFor, nginxVersion) values

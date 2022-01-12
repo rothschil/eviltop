@@ -16,7 +16,6 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class NgxLogHandler implements TaskHandlerble {
 
     public NgxLogService ngxLogService;

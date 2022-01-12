@@ -1,11 +1,11 @@
 package io.github.rothschil.task;
 
 import com.alibaba.fastjson.JSONObject;
+import io.github.rothschil.base.aop.queue.AbstractQueue;
 import io.github.rothschil.base.response.enums.Status;
 import io.github.rothschil.common.constant.Constants;
 import io.github.rothschil.domain.entity.NgxLog;
 import io.github.rothschil.domain.service.NgxLogService;
-import io.github.rothschil.queue.NgxLogQueue;
 import io.github.rothschil.queue.handler.NgxLogHandler;
 import io.github.rothschil.util.ParsingUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -103,8 +103,7 @@ public class FileTaskComponent {
      **/
     protected void insert(List<NgxLog> logList) {
         try {
-            ngxLogHandler.setLogList(logList);
-            ngxLogQueue.addQueue(ngxLogHandler);
+            ngxLogService.insertBatchByOn(logList);
             log.error("logList Size is {}",logList.size());
         } catch (Exception e) {
             log.error("Insert Batch Fail length is {}", logList.size());
@@ -112,16 +111,23 @@ public class FileTaskComponent {
         }
     }
 
-    private NgxLogQueue ngxLogQueue;
+    private NgxLogService ngxLogService;
+
+    private AbstractQueue abstractQueue;
     private NgxLogHandler ngxLogHandler;
 
     @Autowired
-    public void setNgxLogQueue(NgxLogQueue ngxLogQueue) {
-        this.ngxLogQueue = ngxLogQueue;
+    public void setAbstractQueue(AbstractQueue abstractQueue) {
+        this.abstractQueue = abstractQueue;
     }
 
     @Autowired
     public void setNgxLogHandler(NgxLogHandler ngxLogHandler) {
         this.ngxLogHandler = ngxLogHandler;
+    }
+
+    @Autowired
+    public void setNgxLogService(NgxLogService ngxLogService) {
+        this.ngxLogService = ngxLogService;
     }
 }
