@@ -73,7 +73,7 @@
 	<!-- 系统模块日志级别控制  -->
 	<logger name="io.github.rothschil" level="info" />
 	<!-- Spring日志级别控制  -->
-	<logger name="org.springframework" level="warn" />
+	<logger name="org.springframework" level="INFO" />
 
 	<root level="info">
 		<appender-ref ref="console" />
