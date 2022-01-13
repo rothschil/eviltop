@@ -8,6 +8,8 @@ import io.github.rothschil.design.decorator.war3.Changer2Girl;
 import io.github.rothschil.design.decorator.war3.Changer2Succubus;
 import io.github.rothschil.design.decorator.war3.DmHunter;
 import io.github.rothschil.design.decorator.war3.Original;
+import io.github.rothschil.design.factory.Steel;
+import io.github.rothschil.design.factory.SteelFactory;
 import io.github.rothschil.design.iterator.Aggregate;
 import io.github.rothschil.design.iterator.ConcreteAggregate;
 import io.github.rothschil.design.iterator.Iterator;
@@ -31,24 +33,6 @@ import org.junit.jupiter.api.Test;
 @DisplayName("设计模式")
 @Slf4j
 public class TestDesign {
-
-    long beginTime;
-    long end;
-
-    @BeforeEach
-    public void before(){
-        beginTime = System.currentTimeMillis();
-    }
-
-    @AfterEach
-    public void after(){
-        end = System.currentTimeMillis();
-    }
-
-    @AfterEach
-    public void afterAll(){
-        log.info("[AfterAll] 总共耗时={} 毫秒",(end-beginTime));
-    }
 
     @DisplayName("观察者模式")
     @Test
@@ -148,4 +132,16 @@ public class TestDesign {
         Shopping shopping = new Shopping(payment);
         shopping.buyDesktop();
     }
+
+    @DisplayName("工厂模式")
+    @Test
+    public void testFactory(){
+        SteelFactory steelFactory = new SteelFactory();
+        Steel steel = steelFactory.getSteel(1);
+        log.warn(steel.getClass().getSimpleName());
+
+        steel.manufacturing(20);
+
+    }
+
 }
