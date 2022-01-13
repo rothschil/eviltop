@@ -1,9 +1,10 @@
-package io.github.rothschil.design.factory;
+package io.github.rothschil.abstractfactory;
 
+import io.github.rothschil.design.factory.Steel;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Car implements Steel{
+public class Car implements Steel {
 
 
 

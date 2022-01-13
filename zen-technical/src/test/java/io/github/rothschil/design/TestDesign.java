@@ -1,5 +1,8 @@
 package io.github.rothschil.design;
 
+import io.github.rothschil.abstractfactory.AbstractFactory;
+import io.github.rothschil.abstractfactory.Color;
+import io.github.rothschil.abstractfactory.FactoryProducer;
 import io.github.rothschil.design.adapter.StandardAdapter;
 import io.github.rothschil.design.decorator.demo.Component;
 import io.github.rothschil.design.decorator.demo.ConcreteComponent;
@@ -139,9 +142,25 @@ public class TestDesign {
         SteelFactory steelFactory = new SteelFactory();
         Steel steel = steelFactory.getSteel(1);
         log.warn(steel.getClass().getSimpleName());
-
         steel.manufacturing(20);
-
     }
 
+
+    @DisplayName("抽象工厂模式")
+    @Test
+    public void testAbstractFactory(){
+        AbstractFactory abstractFactory1 = FactoryProducer.getAbstractFactory(1);
+        Color color1  = abstractFactory1.getColor(1);
+        color1.fill();
+        Color color2  = abstractFactory1.getColor(2);
+        color2.fill();
+
+        int count =12;
+        AbstractFactory abstractFactory2 = FactoryProducer.getAbstractFactory(2);
+        Steel steel1 = abstractFactory2.getSteel(2);
+        steel1.manufacturing(count);
+
+        Steel steel2 = abstractFactory2.getSteel(1);
+        steel2.manufacturing(count);
+    }
 }

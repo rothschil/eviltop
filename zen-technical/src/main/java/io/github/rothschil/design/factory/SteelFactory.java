@@ -1,5 +1,7 @@
 package io.github.rothschil.design.factory;
 
+import io.github.rothschil.abstractfactory.Car;
+
 public class SteelFactory {
 
     public Steel getSteel(int type){
