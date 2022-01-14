@@ -1,4 +1,4 @@
-package io.github.rothschil.abstractfactory;
+package io.github.rothschil.design.abstractfactory;
 
 import lombok.extern.slf4j.Slf4j;
 

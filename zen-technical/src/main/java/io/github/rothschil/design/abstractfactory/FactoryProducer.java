@@ -1,4 +1,4 @@
-package io.github.rothschil.abstractfactory;
+package io.github.rothschil.design.abstractfactory;
 
 public class FactoryProducer {
 

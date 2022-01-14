@@ -1,6 +1,6 @@
 package io.github.rothschil.design.factory;
 
-import io.github.rothschil.abstractfactory.Color;
+import io.github.rothschil.design.abstractfactory.Color;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

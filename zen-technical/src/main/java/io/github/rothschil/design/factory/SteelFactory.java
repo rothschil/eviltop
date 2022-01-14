@@ -1,6 +1,6 @@
 package io.github.rothschil.design.factory;
 
-import io.github.rothschil.abstractfactory.Car;
+import io.github.rothschil.design.abstractfactory.Car;
 
 public class SteelFactory {
 

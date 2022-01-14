@@ -1,9 +1,13 @@
 package io.github.rothschil.design;
 
-import io.github.rothschil.abstractfactory.AbstractFactory;
-import io.github.rothschil.abstractfactory.Color;
-import io.github.rothschil.abstractfactory.FactoryProducer;
+import io.github.rothschil.design.abstractfactory.AbstractFactory;
+import io.github.rothschil.design.abstractfactory.Color;
+import io.github.rothschil.design.abstractfactory.FactoryProducer;
 import io.github.rothschil.design.adapter.StandardAdapter;
+import io.github.rothschil.design.builder.Car;
+import io.github.rothschil.design.builder.model1.ChiefEngineer;
+import io.github.rothschil.design.builder.model1.ConcreteBuilder;
+import io.github.rothschil.design.builder.model2.ConcreteBuilder2;
 import io.github.rothschil.design.decorator.demo.Component;
 import io.github.rothschil.design.decorator.demo.ConcreteComponent;
 import io.github.rothschil.design.decorator.demo.ConcreteDecorator;
@@ -28,8 +32,6 @@ import io.github.rothschil.design.strategy.Payment;
 import io.github.rothschil.design.strategy.Shopping;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.Enhancer;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -162,5 +164,21 @@ public class TestDesign {
 
         Steel steel2 = abstractFactory2.getSteel(1);
         steel2.manufacturing(count);
+    }
+
+    @DisplayName("创建者模式-1")
+    @Test
+    public void testBuilder1(){
+        ChiefEngineer chiefEngineer = new ChiefEngineer();
+        Car car = chiefEngineer.create(new ConcreteBuilder(new Car()));
+        log.warn(car.toString());
+    }
+
+    @DisplayName("创建者模式-2")
+    @Test
+    public void testBuilder2(){
+        ConcreteBuilder2 builder = new ConcreteBuilder2(new Car());
+        builder.chassis().electrical().transmission().engine().tires();
+        log.warn(builder.build().toString());
     }
 }
