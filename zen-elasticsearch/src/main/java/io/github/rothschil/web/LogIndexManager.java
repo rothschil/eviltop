@@ -15,7 +15,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-public class LogIndexManager extends ElasticIndexManger {
+public class LogIndexManager{
 
     private ElasticIndexManger elasticIndexManger;
 

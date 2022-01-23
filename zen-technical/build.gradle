@@ -30,25 +30,25 @@ tasks.withType(JavaCompile) {
     options.encoding('UTF-8')
 }
 
-dependencies {
+dependencies{
+
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
     implementation("org.projectlombok:lombok:$lombokVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test:$SpringBootVersion") {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter'
-//            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-//            exclude group: 'org.junit.jupiter', module: 'junit-jupiter-api'
-//            exclude group: 'net.minidev', module: 'json-smart'
-//            exclude group: 'net.bytebuddy', module: 'byte-buddy'
-//            exclude group: 'net.bytebuddy', module: 'byte-buddy-agent'
     }
 
-  implementation("io.github.rothschil:common-utils:${commonsVersion}"){
+    implementation("io.github.rothschil:common-utils:1.2.3.RELEASE"){
         exclude group:'com.oracle', module: 'ojdbc6'
         exclude group:'mysql', module: 'mysql-connector-java'
         exclude group:'com.alibaba', module: 'druid-spring-boot-starter'
+        exclude group:'org.hibernate.validator', module: 'hibernate-validator'
+        exclude group:'org.springframework.boot', module: 'spring-boot-starter-jdbc'
     }
+
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.2.1.Final'
     implementation("cglib:cglib:3.3.0")
 }
 
