@@ -1,6 +1,17 @@
 package io.github.rothschil.design;
 
+<<<<<<< HEAD
 import io.github.rothschil.design.adapter.StandardAdapter;
+=======
+import io.github.rothschil.design.abstractfactory.AbstractFactory;
+import io.github.rothschil.design.abstractfactory.Color;
+import io.github.rothschil.design.abstractfactory.FactoryProducer;
+import io.github.rothschil.design.adapter.StandardAdapter;
+import io.github.rothschil.design.builder.Car;
+import io.github.rothschil.design.builder.model1.ChiefEngineer;
+import io.github.rothschil.design.builder.model1.ConcreteBuilder;
+import io.github.rothschil.design.builder.model2.ConcreteBuilder2;
+>>>>>>> ea2ca0fad85ac3985e9e165d08f5038c79a932be
 import io.github.rothschil.design.decorator.demo.Component;
 import io.github.rothschil.design.decorator.demo.ConcreteComponent;
 import io.github.rothschil.design.decorator.demo.ConcreteDecorator;
@@ -8,6 +19,11 @@ import io.github.rothschil.design.decorator.war3.Changer2Girl;
 import io.github.rothschil.design.decorator.war3.Changer2Succubus;
 import io.github.rothschil.design.decorator.war3.DmHunter;
 import io.github.rothschil.design.decorator.war3.Original;
+<<<<<<< HEAD
+=======
+import io.github.rothschil.design.factory.Steel;
+import io.github.rothschil.design.factory.SteelFactory;
+>>>>>>> ea2ca0fad85ac3985e9e165d08f5038c79a932be
 import io.github.rothschil.design.iterator.Aggregate;
 import io.github.rothschil.design.iterator.ConcreteAggregate;
 import io.github.rothschil.design.iterator.Iterator;
@@ -18,10 +34,18 @@ import io.github.rothschil.design.proxy.Access;
 import io.github.rothschil.design.proxy.Accessible;
 import io.github.rothschil.design.proxy.dynamic.CglibProxy;
 import io.github.rothschil.design.proxy.stat.StaticProxy;
+<<<<<<< HEAD
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.Enhancer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+=======
+import io.github.rothschil.design.strategy.Cash;
+import io.github.rothschil.design.strategy.Payment;
+import io.github.rothschil.design.strategy.Shopping;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.cglib.proxy.Enhancer;
+>>>>>>> ea2ca0fad85ac3985e9e165d08f5038c79a932be
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +53,7 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class TestDesign {
 
+<<<<<<< HEAD
     long beginTime;
     long end;
 
@@ -47,6 +72,8 @@ public class TestDesign {
         log.info("[AfterAll] 总共耗时={} 毫秒",(end-beginTime));
     }
 
+=======
+>>>>>>> ea2ca0fad85ac3985e9e165d08f5038c79a932be
     @DisplayName("观察者模式")
     @Test
     public void testObserver() {
@@ -137,4 +164,59 @@ public class TestDesign {
         DmHunter girl = new Changer2Girl(hunter);
         girl.display();
     }
+<<<<<<< HEAD
+=======
+
+    @DisplayName("策略应用")
+    @Test
+    public void testStrategy() {
+        Payment payment = new Cash();
+        Shopping shopping = new Shopping(payment);
+        shopping.buyDesktop();
+    }
+
+    @DisplayName("工厂模式")
+    @Test
+    public void testFactory(){
+        SteelFactory steelFactory = new SteelFactory();
+        Steel steel = steelFactory.getSteel(1);
+        log.warn(steel.getClass().getSimpleName());
+        steel.manufacturing(20);
+    }
+
+
+    @DisplayName("抽象工厂模式")
+    @Test
+    public void testAbstractFactory(){
+        AbstractFactory abstractFactory1 = FactoryProducer.getAbstractFactory(1);
+        Color color1  = abstractFactory1.getColor(1);
+        color1.fill();
+        Color color2  = abstractFactory1.getColor(2);
+        color2.fill();
+
+        int count =12;
+        AbstractFactory abstractFactory2 = FactoryProducer.getAbstractFactory(2);
+        Steel steel1 = abstractFactory2.getSteel(2);
+        steel1.manufacturing(count);
+
+        Steel steel2 = abstractFactory2.getSteel(1);
+        steel2.manufacturing(count);
+    }
+
+    @DisplayName("创建者模式-1")
+    @Test
+    public void testBuilder1(){
+        ChiefEngineer chiefEngineer = new ChiefEngineer();
+        Car car = chiefEngineer.create(new ConcreteBuilder(new Car()));
+        log.warn(car.toString());
+    }
+
+    @DisplayName("创建者模式-2")
+    @Test
+    public void testBuilder2(){
+        ConcreteBuilder2 builder = new ConcreteBuilder2(new Car());
+        builder.chassis().electrical().transmission().engine().tires();
+        log.warn(builder.build().toString());
+    }
+>>>>>>> ea2ca0fad85ac3985e9e165d08f5038c79a932be
 }
