@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.rothschil.domain.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="io.github.rothschil.domain.entity.Order">
+    <id column="order_id" jdbcType="BIGINT" property="id" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+
+  <insert id="insertOrder" parameterType="io.github.rothschil.domain.entity.Order">
+    insert into t_order(order_id, price, user_id, status)
+    values (#{orderId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{userId,jdbcType=INTEGER},
+    #{status,jdbcType=VARCHAR})
+  </insert>
+
+
+  <select id="findOrderByIds" parameterType="java.util.List" resultType="io.github.rothschil.domain.entity.Order">
+    select
+    t.order_id, t.price, t.user_id, t.status
+    from t_order AS t
+    where t.order_id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+
+
+</mapper>
