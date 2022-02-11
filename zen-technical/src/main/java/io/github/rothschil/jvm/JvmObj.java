@@ -13,7 +13,7 @@ public class JvmObj {
         bytes3 = new byte[128 * 1024];
         bytes3 = null;
 
-//        byte[] bytes4 = new byte[4 * 1024 * 1024];
+        byte[] bytes4 = new byte[4 * 1024 * 1024];
 
     }
 }
